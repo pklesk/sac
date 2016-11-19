@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <project name="SaC" default="deploy_jar">
-	<property name="ver" value="1.0.0" />
+	<property name="ver" value="1.0.1" />
 	<property name="build" location="./bin" />
 	<property name="dist" location="./dist" />
 	<property name="src" location="./src" />
@@ -33,12 +33,12 @@
 	</target>
 	<target name="pack_docs" depends="docs" description="packing docs">
 		<!-- Put everything in ${javadoc} into the *.zip file -->
-		<jar jarfile="${dist}/sac_doc.zip" basedir="${javadoc}">
+		<jar jarfile="${dist}/sac-${ver}-javadoc.zip" basedir="${javadoc}">
 		</jar>
 	</target>
 	<target name="pack_src" depends="docs" description="packing sources">
 		<!-- Put everything in ${src} into the *.zip file -->
-		<jar jarfile="${dist}/sac_src.zip" basedir="${src}">
+		<jar jarfile="${dist}/sac-${ver}-src.zip" basedir="${src}">
 		</jar>
 	</target>
 	<target name="uml" depends="compile">
