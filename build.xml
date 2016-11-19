@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<project name="SaC" default="deploy_jar">
+	<property name="ver" value="1.0.0" />
+	<property name="build" location="./bin" />
+	<property name="dist" location="./dist" />
+	<property name="src" location="./src" />
+	<property name="lib" location="./lib" />
+	<property name="javadoc" location="./javadoc" />
+	<property name="uml" location="./uml" />
+
+	<path id="lib.classpath">
+		<fileset>
+			<include name="${lib}/jcommon-1.0.17.jar" />
+			<include name="${lib}/jfreechart-1.0.14.jar" />
+			<include name="${lib}/swt.jar" />
+		</fileset>
+	</path>
+	<target name="build" description="clean up">
+		<mkdir dir="${build}" />
+		<mkdir dir="${build}/META-INF" />
+		<mkdir dir="${javadoc}" />
+	</target>
+	<target name="compile" depends="build" >
+		<javac includeantruntime="false" srcdir="${src}" destdir="${build}" classpath="${lib}/jcommon-1.0.17.jar;${lib}/jfreechart-1.0.14.jar;${lib}/swt.jar" />
+	</target>
+	<target name="docs" depends="build">
+		<javadoc encoding="UTF-8" charset="UTF-8" sourcepath="${src}" stylesheetfile="${lib}/stylesheet.css" classpath="${lib}/jcommon-1.0.17.jar;${lib}/jfreechart-1.0.14.jar;${lib}/swt.jar" destdir="${javadoc}" packagenames="sac.*">
+			<!-- Define which files / directory should get included, we include all -->
+			<fileset dir="src">
+				<include name="src/sac/graph/**" />				
+			</fileset>
+		</javadoc>
+	</target>
+	<target name="pack_docs" depends="docs" description="packing docs">
+		<!-- Put everything in ${javadoc} into the *.zip file -->
+		<jar jarfile="${dist}/sac_doc.zip" basedir="${javadoc}">
+		</jar>
+	</target>
+	<target name="pack_src" depends="docs" description="packing sources">
+		<!-- Put everything in ${src} into the *.zip file -->
+		<jar jarfile="${dist}/sac_src.zip" basedir="${src}">
+		</jar>
+	</target>
+	<target name="uml" depends="compile">
+		<property name="uml.dir" value="${uml}" />
+		<property name="src.java.dir" value="${src}" />
+		<mkdir dir="${uml.dir}" />
+		<path id="uml.source.path">
+			<pathelement path="${src.java.dir}" />
+		</path>
+		<javadoc sourcepathref="uml.source.path" packagenames="sac.*" package="true" classpath="${lib}/jcommon-1.0.17.jar;${lib}/jfreechart-1.0.14.jar;${lib}/swt.jar">
+			<doclet name="org.umlgraph.doclet.UmlGraph" path="${lib}/UmlGraph.jar">
+				<param name="-all" />
+				<param name="-constructors" />
+				<param name="-d" value="${uml.dir}" />
+				<param name="-hide" value="sac.examples.*" />
+				<param name="-hide" value="sac.stats.*" />
+				<param name="-hide" value="sac.graphviz.*" />
+				<param name="-hide" value="java.*" />
+				<param name="-hide" value="org.jfree.*" />
+				<param name="-nodefontsize" value="9" />
+			</doclet>
+			<fileset dir="src" defaultexcludes="yes">
+				<include name="src/**" />			
+			</fileset>
+		</javadoc>
+		<apply executable="dot" dest="${uml.dir}" parallel="false">
+			<arg value="-Tpdf" />
+			<arg value="-o" />
+			<targetfile />
+			<srcfile />
+			<fileset dir="${uml.dir}" includes="*.dot" />
+			<mapper type="glob" from="*.dot" to="*.pdf" />
+		</apply>
+	</target>
+	<target name="deploy_jar" depends="compile, pack_docs, docs, pack_src, uml" description="creates executable JAR">
+		<jar jarfile="${dist}/sac-${ver}.jar" basedir="${build}">
+			<manifest>
+			</manifest>
+		</jar>
+	</target>
+</project>
+
