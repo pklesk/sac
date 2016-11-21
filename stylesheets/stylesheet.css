@@ -230,8 +230,9 @@ hr {
 
 table {
   border: 0px solid #373737;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   text-align: left;
+  border-spacing: 0px;
  }
 
 th {
@@ -242,7 +243,7 @@ th {
  }
 
 td {
-  padding: 10px;
+  padding: 0px;
   border: 1px solid #373737;
   vertical-align: middle;
  }
