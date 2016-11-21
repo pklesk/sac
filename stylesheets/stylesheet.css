@@ -243,7 +243,8 @@ th {
 
 td {
   padding: 10px;
-  border: 0px solid #373737;
+  border: 1px solid #373737;
+  vertical-align: middle;
  }
 
 form {
