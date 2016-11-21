@@ -233,6 +233,7 @@ table {
   margin-bottom: 0px;
   text-align: left;
   border-spacing: 0px;
+  padding: 0px;
  }
 
 th {
@@ -246,6 +247,7 @@ td {
   padding: 0px;
   border: 1px solid #373737;
   vertical-align: middle;
+  margin-bottom: 0px;  
  }
 
 form {
