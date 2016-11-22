@@ -389,11 +389,11 @@ Small Device Styles
   }
 
   #project_title {
-  font-size: 32px;
+  font-size: 28px;
   }
 
   h1 {
-    font-size: 28px;
+    font-size: 26px;
   }
 
   h2 {
@@ -405,7 +405,7 @@ Small Device Styles
   }
 
   h4 {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   h5 {
@@ -423,7 +423,7 @@ Small Device Styles
   }
   
   footer p { 
-    font-size: 9px;
+    font-size: 8px;
   }
 
 }
