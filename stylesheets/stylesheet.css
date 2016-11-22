@@ -87,6 +87,7 @@ h5 {
 h6 {
   font-size: 16px;
   font-style: italic;
+  color: #f2f2f2;
 }
 
 p {
@@ -414,7 +415,9 @@ Small Device Styles
   }
 
   h6 {
-    font-size: 12px;
+    font-size: 12px;    
+    font-style: italic;
+    color: #f2f2f2;    
   }
 
   code, pre {
