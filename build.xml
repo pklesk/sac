@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <project name="SaC" default="deploy_jar">
-	<property name="ver" value="1.0.1" />
+	<property name="ver" value="1.0.2" />
 	<property name="build" location="./bin" />
 	<property name="dist" location="./dist" />
 	<property name="src" location="./src" />
