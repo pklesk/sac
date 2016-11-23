@@ -178,6 +178,8 @@ public class Sudoku extends GraphStateImpl {
 	 * conflict in the i-th row or the j-th column or the subsquare containing 
 	 * the cell (i, j).   
 	 * 
+	 * @param i row index
+	 * @param j column
 	 * @return boolean flag stating if this sudoku is admissible around (i, j)
 	 */
 	protected boolean isAdmissible(int i, int j) {
