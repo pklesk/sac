@@ -85,9 +85,17 @@ public class ConsoleSolver {
 			}
 		} else {						
 			System.out.println("DEFAULT SUDOKU 'QASSIM HAMZA'.");
-			String sudokuString = "0,0,0,7,0,0,8,0,0," + "0,0,0,0,4,0,0,3,0," + "0,0,0,0,0,9,0,0,1," + "6,0,0,5,0,0,0,0,0," + "0,1,0,0,3,0,0,4,0,"
-					+ "0,0,5,0,0,1,0,0,7," + "5,0,0,2,0,0,6,0,0," + "0,3,0,0,8,0,0,9,0," + "0,0,7,0,0,0,0,0,2";
-													
+			String sudokuString = 
+					  "0,0,0,7,0,0,8,0,0," 
+					+ "0,0,0,0,4,0,0,3,0," 
+					+ "0,0,0,0,0,9,0,0,1," 
+					+ "6,0,0,5,0,0,0,0,0," 
+					+ "0,1,0,0,3,0,0,4,0,"
+					+ "0,0,5,0,0,1,0,0,7," 
+					+ "5,0,0,2,0,0,6,0,0," 
+					+ "0,3,0,0,8,0,0,9,0," 
+					+ "0,0,7,0,0,0,0,0,2";
+			
 			sudoku = new Sudoku((byte) 3, sudokuString);
 		}
 		
@@ -128,7 +136,7 @@ public class ConsoleSolver {
 
 		System.out.println("SUDOKU TO SOLVE:");
 		System.out.println(sudoku);		
-
+		
 		GraphSearchAlgorithm algorithm = new BestFirstSearch(sudoku, configurator);
 		
 		System.out.println("HEURISTICS: " + heuristics.getClass().getName() + ".");

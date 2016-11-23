@@ -132,7 +132,7 @@ public class Sudoku extends GraphStateImpl {
 			for (byte possibility : possibilities) {
 				Sudoku child = new Sudoku(this);
 				child.board[minI][minJ] = possibility;
-				if (child.isAdmissible()) {
+				if (child.isAdmissible(minI, minJ)) {
 					child.emptyCells = emptyCells - 1;
 					child.setMoveName("(" + (minI + 1) + "," + (minJ + 1) + "):=" + possibility);
 					children.add(child);
@@ -171,54 +171,50 @@ public class Sudoku extends GraphStateImpl {
 		}
 		return builder.toString();
 	}
-
+	
 	/**
-	 * Returns a boolean flag stating if this sudoku is admissible (false indicates that there exists at least one
-	 * conflict in the sudoku board).
+	 * Returns a boolean flag stating if this sudoku is admissible around 
+	 * the cell (i, j). False indicates that there exists at least one
+	 * conflict in the i-th row or the j-th column or the subsquare containing 
+	 * the cell (i, j).   
 	 * 
-	 * @return boolean flag stating if this sudoku is admissible
+	 * @return boolean flag stating if this sudoku is admissible around (i, j)
 	 */
-	protected boolean isAdmissible() {
+	protected boolean isAdmissible(int i, int j) {
 		List<Byte> groupUnderCheck = new ArrayList<Byte>();
 
-		// checking each square
-		for (int k = 0; k < N; k++) {
-			int minI = n * (k % n);
-			int minJ = n * (k / n);
+		// square around (i, j) 
+		int minI = (i / n) * n;
+		int minJ = (j / n) * n;
 
-			for (int i = minI; i < minI + n; i++)
-				for (int j = minJ; j < minJ + n; j++)
-					if (board[i][j] > 0)
-						groupUnderCheck.add(Byte.valueOf(board[i][j]));
-
-			if (!isGroupAdmissible(groupUnderCheck))
+		for (int ii = minI; ii < minI + n; ii++)
+			for (int jj = minJ; jj < minJ + n; jj++)
+				if (board[ii][jj] > 0)
+					groupUnderCheck.add(Byte.valueOf(board[ii][jj]));
+		if (!isGroupAdmissible(groupUnderCheck))
 				return false;
-			groupUnderCheck.clear();
-		}
+		groupUnderCheck.clear();
+		
 
-		// checking each row
-		for (int i = 0; i < N; i++)
-			for (int j = 0; j < N; j++) {
-				if (board[i][j] > 0)
-					groupUnderCheck.add(Byte.valueOf(board[i][j]));
-				if (!isGroupAdmissible(groupUnderCheck))
-					return false;
-				groupUnderCheck.clear();
-			}
+		// i-th row
+		for (int jj = 0; jj < N; jj++)
+			if (board[i][jj] > 0)
+				groupUnderCheck.add(Byte.valueOf(board[i][jj]));
+		if (!isGroupAdmissible(groupUnderCheck))
+			return false;
+		groupUnderCheck.clear();
 
-		// checking each column
-		for (int j = 0; j < N; j++)
-			for (int i = 0; i < N; i++) {
-				if (board[i][j] > 0)
-					groupUnderCheck.add(Byte.valueOf(board[i][j]));
-				if (!isGroupAdmissible(groupUnderCheck))
-					return false;
-				groupUnderCheck.clear();
-			}
+		// j-th column
+		for (int ii = 0; ii < N; ii++) 
+			if (board[ii][j] > 0)
+				groupUnderCheck.add(Byte.valueOf(board[ii][j]));
+		if (!isGroupAdmissible(groupUnderCheck))
+			return false;
+		
 
 		return true;
 	}
-
+	
 	/**
 	 * A helper method for isAdmissible() method. Returns a boolean flag indicating if the given group of numbers (row,
 	 * column, or subsquare) is admissible (i.e. contains no conflicts).
@@ -229,14 +225,17 @@ public class Sudoku extends GraphStateImpl {
 	protected boolean isGroupAdmissible(List<Byte> group) {
 		if (group.size() == 0)
 			return true; // empty group is implied by all zeros in it
-		for (int i = 0; i < group.size() - 1; i++) {
-			byte tempByte = group.get(i).byteValue();
-			for (int j = i + 1; j < group.size(); j++) {
-				byte toBeCompared = group.get(j).byteValue();
-				if (tempByte == toBeCompared)
-					return false;
-			}
-		}
+		
+		boolean[] visited = new boolean[N];
+		for (int i = 0; i < N; i++)
+			visited[i] = false;
+		
+		for (Byte element : group)
+			if (visited[element.byteValue() - 1])
+				return false;
+			else
+				visited[element.byteValue() - 1] = true;
+		
 		return true;
 	}
 	
