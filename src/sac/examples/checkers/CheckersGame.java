@@ -653,7 +653,7 @@ public class CheckersGame {
 		info("");
 		info("This game is a part of the \"Search and Conquer\" library,");
 		info("developed under the TEWI project.");
-		info("For details see: http://www.wi.pb.edu.pl/index.php/projekty-ue/tewi");
+		info("For details see: http://pklesk.github.io/sac");
 		info("");
 	}
 
