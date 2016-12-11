@@ -1,5 +1,7 @@
 Project: Search and Conquer (SaC) - Java Library for Searching Graphs and Game Trees
-Version: 1.0.1
+Version: 1.0.3
+
+Official website: http://pklesk.github.io/sac
 
 Authors: Przemysław Klęsk (pklesk@wi.zut.edu.pl) and Marcin Korzeń (mkorzen@wi.zut.edu.pl)
 Institution: Faculty of Computer Science and Information Technology, West Pomeranian University of Technology, Żółnierska 49, 71-210 Szczecin, Poland
